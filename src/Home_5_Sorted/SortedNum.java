@@ -3,12 +3,13 @@ package Home_5_Sorted;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class SortedNum {
     public static List<Integer> pourList(List<Integer> newList, int num) {
+        Random random = new Random();
         for (int i = num; i > 0; i--) {
-            newList.add(i); /*вставка в массив*/
-            newList.add(num - i); /*вставляем дубли*/
+            newList.add(random.nextInt(num)); /*вставка рандомных чисел в массив*/
         }
         return newList;
     }
@@ -29,20 +30,31 @@ public class SortedNum {
 
     public static void main(String[] args) {
         List<Integer> list = new ArrayList<>();
-        long startTime, endTime;
+        long startTime;
+        long rezultTimeSortMy, rezultTimeSortProm;
 
-        pourList(list, 50);
-
-        startTime = System.currentTimeMillis();
-        startSort(list); /*Сортировка*/
-        System.out.println(list); /*Вывод отсортированного массива*/
-        endTime = System.currentTimeMillis();
-        System.out.println("Сортировка своей реализацией: " + (endTime - startTime));
+        pourList(list, 10_000);
 
         startTime = System.currentTimeMillis();
-        Collections.sort(list); /*Сортировка*/
-        System.out.println(list); /*Вывод отсортированного массива*/
-        endTime = System.currentTimeMillis();
-        System.out.println("Сортировка коллекцией: " + (endTime - startTime));
+        startSort(list); /*Сортировка своей реализацией*/
+        rezultTimeSortMy = System.currentTimeMillis() - startTime;
+        System.out.println("Сортировка своей реализацией: " + rezultTimeSortMy);
+
+
+        pourList(list, 10_000);
+
+        startTime = System.currentTimeMillis();
+        Collections.sort(list); /*Сортировка промышленной реализацией*/
+        rezultTimeSortProm = System.currentTimeMillis() - startTime;
+        System.out.println("Сортировка коллекцией: " + rezultTimeSortProm);
+
+        if (rezultTimeSortMy > rezultTimeSortProm) {
+            System.out.println("Промышленная реализация работает быстрее на " + (rezultTimeSortMy - rezultTimeSortProm) + "мс, эффективнее использовать ее.");
+        } else if (rezultTimeSortMy < rezultTimeSortProm) {
+            System.out.println("Своя реализация работает быстрее на " + (rezultTimeSortProm - rezultTimeSortMy) + "мс, эффективнее использовать ее.");
+        } else {
+            System.out.println("Обе реализации работают одиннаково, можно использовать любую.");
+        }
+
     }
 }
