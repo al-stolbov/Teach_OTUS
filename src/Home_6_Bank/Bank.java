@@ -2,23 +2,22 @@ package Home_6_Bank;
 
 import java.util.*;
 
-public class Bank {
-    static HashMap<Account, Integer> balance = new HashMap<>();
 
-    public static List<Account> getAccounts(Client client) {
-        List<Account> listAcc = new ArrayList<>();
-        for (Account acc : balance.keySet()) {
-            if (acc.getClient().equals(client)) {
-                listAcc.add(acc);
-                System.out.println("Счет: " + acc.getAcc());
-            }
-        }
-        return listAcc;
+public class Bank {
+    private static Map<Client, HashSet<Account>> bank = new HashMap<>();
+
+    public static HashSet<Account> getAccounts(Client client) {
+        return bank.get(client);
     }
 
     public static Client findClient(Account account) {
-        System.out.println("Клиент: " + account.getClient().getName());
-        return account.getClient();
+        return bank.entrySet()
+                .stream()
+                .filter(f ->
+                        f.getValue().contains(account))
+                .map(Map.Entry::getKey)
+                .findAny()
+                .get();
     }
 
 
@@ -30,28 +29,26 @@ public class Bank {
         Client clientMarina = new Client("Марина", 25);
         Client clientDenis = new Client("Денис", 19);
 
-        Account acc1 = new Account(clientPetay, 1111);
-        Account acc2 = new Account(clientPetay, 2222);
-        Account acc3 = new Account(clientDenis, 3333);
-        Account acc4 = new Account(clientVasay, 4444);
-        Account acc5 = new Account(clientTanay, 5555);
-        Account acc6 = new Account(clientMarina, 6666);
-        Account acc7 = new Account(clientDenis, 7777);
-        Account acc8 = new Account(clientPetay, 8888);
-        Account acc9 = new Account(clientTanay, 9999);
+        Account acc1 = new Account(1001);
+        Account acc2 = new Account(1002);
+        Account acc3 = new Account(1003);
+        Account acc4 = new Account(1004);
+        Account acc5 = new Account(1005);
+        Account acc6 = new Account(1006);
+        Account acc7 = new Account(1007);
+        Account acc8 = new Account(1008);
+        Account acc9 = new Account(1009);
 
-        balance.put(acc1, 505);
-        balance.put(acc2, 405);
-        balance.put(acc3, 500);
-        balance.put(acc4, 501);
-        balance.put(acc5, 345);
-        balance.put(acc6, 385);
-        balance.put(acc7, 202);
-        balance.put(acc8, 108);
-        balance.put(acc9, 415);
+        bank.put(clientPetay, new HashSet<>(List.of(acc1, acc2)));
+        bank.put(clientVasay, new HashSet<>(List.of(acc3, acc4)));
+        bank.put(clientTanay, new HashSet<>(List.of(acc5, acc6)));
+        bank.put(clientMarina, new HashSet<>(List.of(acc7, acc8)));
+        bank.put(clientDenis, new HashSet<>(List.of(acc9)));
 
-        getAccounts(clientDenis);
-        findClient(acc2);
+
+        System.out.println(findClient(acc2).getName());
+
+        getAccounts(new Client("Петя", 20)).forEach(i -> System.out.println(i.getAcc()));
 
 
     }
