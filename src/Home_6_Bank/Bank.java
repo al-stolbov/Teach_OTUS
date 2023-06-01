@@ -4,15 +4,14 @@ import java.util.*;
 
 
 public class Bank {
-    private static Map<Client, HashSet<Account>> bank = new HashMap<>();
+    private static Map<Client, Set<Account>> bank = new HashMap<>();
 
-    public static HashSet<Account> getAccounts(Client client) {
+    public static Set<Account> getAccounts(Client client) {
         return bank.get(client);
     }
 
     public static Client findClient(Account account) {
-        return bank.entrySet()
-                .stream()
+        return bank.entrySet().parallelStream()
                 .filter(f ->
                         f.getValue().contains(account))
                 .map(Map.Entry::getKey)
