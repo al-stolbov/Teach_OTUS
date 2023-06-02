@@ -14,8 +14,7 @@ public class Bank {
         return bank.entrySet().parallelStream()
                 .filter(f ->
                         f.getValue().contains(account))
-                .map(Map.Entry::getKey)
-                .findAny()
+                .findFirst().map(Map.Entry::getKey)
                 .get();
     }
 
