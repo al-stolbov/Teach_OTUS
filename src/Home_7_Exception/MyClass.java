@@ -1,12 +1,11 @@
 package Home_7_Exception;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MyClass {
 
-    public static void main(String[] args) throws BusinessError {
+    public static void main(String[] args) throws BusinessError, IOException {
         try {
             throw new MyException("Вывод ошибки. ");
         } catch (MyException ex) {
@@ -17,9 +16,6 @@ public class MyClass {
 
         try (FileOutputStream file = new FileOutputStream("Путь к файлу")) {
             file.write(3);
-
-        } catch (IOException ex) {
-            throw new RuntimeException("Проверьте путь к файлу.", ex);
         }
 
 
