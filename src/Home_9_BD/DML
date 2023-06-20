@@ -1,0 +1,23 @@
+insert into tab_answers (answer) values (30), (31), (31);
+
+insert into tab_questions (question, version_1, version_2, version_3, version_4, answer_id)
+values (
+           'Сколько дней в ноябре ?', '31', '28', '30', '29', 1
+       );
+
+insert into tab_questions (question, version_1, version_2, version_3, version_4, answer_id)
+values (
+           'Сколько дней в декабре ?', '25', '31', '29', '30', 2
+       );
+
+insert into tab_questions (question, version_1, version_2, version_3, version_4, version_5, answer_id)
+values (
+           'Сколько дней в январе ?', '31', '29', '30', '28', '20', 3
+       );
+
+select * from tab_answers;
+select * from tab_questions;
+
+select q.question, answer
+from tab_questions q
+left join tab_answers a on q.answer_id = a.id;
