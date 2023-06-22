@@ -1,0 +1,15 @@
+create table tab_answers (
+    id              serial  primary key,
+    answer          integer
+);
+
+create table tab_questions (
+    id          serial  primary key,
+    question    varchar(100) not null,
+    version_1   varchar(50),
+    version_2   varchar(50),
+    version_3   varchar(50),
+    version_4   varchar(50),
+    version_5   varchar(50),
+    answer_id   integer references tab_answers
+);
