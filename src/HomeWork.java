@@ -17,5 +17,6 @@ public class HomeWork {
         String fullName = sc.nextLine();
         String encodedFullName = Base64.getEncoder().encodeToString(fullName.getBytes());
         System.out.println("Program result: " + encodedFullName);
+        System.out.println("Final");
     }
 }
