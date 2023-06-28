@@ -1,0 +1,155 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Форма добавления информации о студенте</title>
+    <style>
+        h1, h2, h3 {
+            color: black;
+        }
+
+        .students-tab, .students-form {
+            font-size: 20px;
+            border: 2px solid steelblue;
+            width: 1000px;
+            border-collapse: collapse;
+            margin-bottom: 50px;
+        }
+        .students-tab tr td {
+            border: 1px solid steelblue;
+        }
+
+        .students-tab-col1 {
+            width: 350px;
+            background: cornsilk;
+            font-weight:bold;
+        }
+        .students-tab-col2, .students-tab-col3, .students-tab-col4 {
+            width: 150px;
+            background: cornsilk;
+            font-weight:bold;
+        }
+
+        .tabStudentName, .tabStudentBirthdate, .tabStudentGender {
+            padding-left: 30px;
+        }
+
+        #studentName, #studentBirthdate, #studentGender {
+            font-size: large;
+            width: 700px;
+            border-color: steelblue;
+            margin: 10px;
+        }
+    </style>
+
+    <script>
+        "use strict"
+
+        function addStudent() {
+            const studentsTab = document.getElementById("studentsTab");
+            let studentName = document.getElementById("studentName").value;
+            let studentGender = document.getElementById("studentGender").value;
+            let studentBirthdate = document.getElementById("studentBirthdate").value;
+            let studentAge = Math.round((new Date() - new Date(studentBirthdate)) / 1000 / 60 / 60 / 24 / 365);
+            if (isNaN(studentAge)) studentAge = 0;
+
+            const newRow = studentsTab.insertRow(studentsTab.rows.length-2);
+
+            let name = newRow.insertCell(-1);
+            name.appendChild(document.createTextNode(studentName));
+            let gender = newRow.insertCell(-1);
+            gender.appendChild(document.createTextNode(studentGender));
+            let birthdate = newRow.insertCell(-1);
+            birthdate.appendChild(document.createTextNode(studentBirthdate));
+            let age = newRow.insertCell(-1);
+            age.appendChild(document.createTextNode(studentAge));
+            let middleAge = document.getElementById("middleAge");
+            let sumAge = 0;
+
+            for (let row of studentsTab.rows)
+            {
+                if (row.rowIndex > 0 && row.rowIndex < studentsTab.rows.length-2) {
+                    for (let cell of row.cells)
+                    {
+                        if (cell.cellIndex === 3) {
+                            sumAge += Number(cell.textContent);
+                        }
+                    }
+                }
+            }
+
+            middleAge.textContent = Math.round(sumAge / (studentsTab.rows.length-3));
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<h2>
+    Форма добавления информации о студенте
+</h2>
+<table class = "students-form">
+    <thead>
+    <tr>
+        <td class = "tabStudentName"> Имя студента:</td>
+        <td><input id = "studentName" type = "text" value = "Василий Петрович"></td>
+    </tr>
+    <tr>
+        <td class = "tabStudentBirthdate"> Дата рождения:</td>
+        <td><input id = "studentBirthdate" type = "date"></td>
+    </tr>
+    <tr>
+        <td class = "tabStudentGender"> Пол:</td>
+        <td>
+            <select id = "studentGender">
+                <option value="Мужской">Мужской</option>
+                <option value="Женский">Женский</option>
+            </select>
+    </tr>
+    <tr>
+        <td><button onclick = "addStudent()" style="font-size: 20px; margin: 20px">Добавить</button></td>
+    </tr>
+    </thead>
+</table>
+
+<h2>Таблица студентов</h2>
+<table class="students-tab" id="studentsTab">
+    <thead>
+    <tr>
+        <td class="students-tab-col1">Имя студента</td><td class="students-tab-col2">Пол</td><td class="students-tab-col3">Дата рождения</td><td class="students-tab-col4">Возраст</td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>Иванов Александр Петрович</td><td>Мужской</td><td>1999-01-01</td><td>24</td>
+    </tr>
+    <tr>
+        <td>Петров Иван Иванович</td><td>Мужской</td><td>1995-01-01</td><td>28</td>
+    </tr>
+    <tr><td colspan="4"><br></td></tr>
+    <tr>
+        <td colspan="3">Средний возраст студентов</td><td id="middleAge">26</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
