@@ -1,12 +1,20 @@
 package PriceInWords.Consumer;
 
+import PriceInWords.Service.MaxDigit;
+import PriceInWords.Service.NotZero;
+import PriceInWords.Service.Validator;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static PriceInWords.Service.MaxDigit.MAX_INT;
+
 public class ConsoleImp implements Console {
-    private final int MAX_INT = 2_000_000;
+
     private final Print print;
+    private final Validator maxDigit = new MaxDigit();
+    private final Validator notZero = new NotZero();
 
     public ConsoleImp(Print print) {
         this.print = print;
@@ -25,7 +33,7 @@ public class ConsoleImp implements Console {
             }
             try {
                 int num = Integer.parseInt(enter);
-                if (num <= MAX_INT && num >= 0) {
+                if (maxDigit.valid(num) && notZero.valid(num)) {
                     return num;
                 }
             } catch (NumberFormatException e) {
